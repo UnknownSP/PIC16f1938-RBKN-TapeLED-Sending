@@ -1,10 +1,3 @@
-/*
- * File:   LEDBlink.h
- * Author: seimi
- *
- * Created on 2016/02/13, 13:38
- */
-
 #ifndef MAIN_H
 #define	MAIN_H
 
