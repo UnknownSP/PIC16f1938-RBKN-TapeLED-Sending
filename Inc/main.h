@@ -60,7 +60,10 @@ typedef enum{
   RED = 2,
   GREEN = 3,
   BLUE = 4,
-  
+  YELLOW = 5,
+  PURPLE = 6,
+  BLINK_RED = 7,
+  INCREMENT = 8,
 }BlinkMode_t;
 
 const char rainbow[20][3]={
