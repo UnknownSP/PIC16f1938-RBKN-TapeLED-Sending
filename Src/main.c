@@ -6,39 +6,142 @@
 #define DATA_LOW(){LATBbits.LATB0=0;}
 
 void init(void);
+static void blink(BlinkMode_t mode, int tape_num);
+void set_rgb(int tape_num, int lednum, char color, int set_data);
 
 void main(void) {
 
-
-  char rainbow[20][3]={
-    {0,0,255},{0,51,204},{0,102,153},{0,153,102},{0,204,51},
-    {0,255,0},{31,207,0},{60,159,0},{110,111,0},{160,63,0},
-    {150,50,0},{180,40,10},{200,30,20},{220,20,30},{180,10,60},
-    {160,6,120},{140,5,130},{120,4,150},{80,3,180},{40,2,220},
-  };
-  int j=0;
+  int j=40;
   
   init();
-  for(int i=0; i<LEDs; i++){
-    R[i] = rainbow[i][0];
-    G[i] = rainbow[i][1];
-    B[i] = rainbow[i][2];
-  }
   while(true){
-    SendData();
-    for(int i=0; i<LEDs; i++){
-      int num = i+j;
-      num %= 20; 
-      R[i] = rainbow[num][0];
-      G[i] = rainbow[num][1];
-      B[i] = rainbow[num][2];
-    }
-    __delay_ms(50);
     RB1 = !RB1;
-    j++;
-    if(j>19){
-      j = 0;
+    blink(NONE,1);
+    blink(NONE,2);
+    blink(GREEN,3);
+    blink(RED,4);
+  }
+}
+
+static void blink(BlinkMode_t mode, int tape_num){
+  
+  static int count[4]={0,0,0,0};
+  int i;
+  
+  switch(mode){
+  case RAINBOW:
+    for(i=0; i<tape_leds_num[tape_num-1]; i++){
+      int num = i+count[tape_num-1];
+      num %= 20;//tape_leds_num[tape_num-1];
+      set_rgb(tape_num, i, 'R', rainbow[num][0]);
+      set_rgb(tape_num, i, 'G', rainbow[num][1]);
+      set_rgb(tape_num, i, 'B', rainbow[num][2]);
     }
+    count[tape_num-1]++;
+    if(count[tape_num-1]>=20){
+      count[tape_num-1] = 0;
+    }
+    SendData(tape_num);
+    __delay_ms(10);
+    break;
+    
+  case RED:
+    for(i=0; i<tape_leds_num[tape_num-1]; i++){
+      set_rgb(tape_num, i, 'R', 255);
+      set_rgb(tape_num, i, 'G', 0);
+      set_rgb(tape_num, i, 'B', 0);
+    }
+    SendData(tape_num);
+    __delay_ms(10);
+    break;
+    
+  case GREEN:
+    for(i=0; i<tape_leds_num[tape_num-1]; i++){
+      set_rgb(tape_num, i, 'R', 0);
+      set_rgb(tape_num, i, 'G', 255);
+      set_rgb(tape_num, i, 'B', 0);
+    }
+    SendData(tape_num);
+    __delay_ms(10);
+    break;
+    
+  case BLUE:
+    for(i=0; i<tape_leds_num[tape_num-1]; i++){
+      set_rgb(tape_num, i, 'R', 0);
+      set_rgb(tape_num, i, 'G', 0);
+      set_rgb(tape_num, i, 'B', 255);
+    }
+    SendData(tape_num);
+    __delay_ms(10);
+    break;
+    
+  case NONE:
+    for(i=0; i<tape_leds_num[tape_num-1]; i++){
+      set_rgb(tape_num, i, 'R', 0);
+      set_rgb(tape_num, i, 'G', 0);
+      set_rgb(tape_num, i, 'B', 0);
+    }
+    SendData(tape_num);
+    __delay_ms(10);
+    break;
+  }
+}
+
+void set_rgb(int tape_num, int lednum, char color, int set_data){
+  switch(tape_num){
+  case 1:
+    switch(color){
+    case 'R':
+      R1[lednum] = set_data;
+      break;
+    case 'G':
+      G1[lednum] = set_data;
+      break;
+    case 'B':
+      B1[lednum] = set_data;
+      break;
+    }
+    break;
+    
+  case 2:
+    switch(color){
+    case 'R':
+      R2[lednum] = set_data;
+      break;
+    case 'G':
+      G2[lednum] = set_data;
+      break;
+    case 'B':
+      B2[lednum] = set_data;
+      break;
+    }
+    break;
+  case 3:
+    switch(color){
+    case 'R':
+      R3[lednum] = set_data;
+      break;
+    case 'G':
+      G3[lednum] = set_data;
+      break;
+    case 'B':
+      B3[lednum] = set_data;
+      break;
+    }
+    break;
+  case 4:
+    switch(color){
+    case 'R':
+      R4[lednum] = set_data;
+      break;
+    case 'G':
+      G4[lednum] = set_data;
+      break;
+    case 'B':
+      B4[lednum] = set_data;
+      break;
+    }
+    break;
   }
 }
 

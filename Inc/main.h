@@ -39,11 +39,43 @@ extern "C" {
 #include <pic16f1938.h>
 #include "LEDDrive.h"
 
-#define LEDs 20
+#define MAX_LEDs 200
+  
+#define TAPE1_LEDs 20
+#define TAPE2_LEDs 20
+#define TAPE3_LEDs 20
+#define TAPE4_LEDs 20
 
-unsigned char R[LEDs];
-unsigned char B[LEDs];
-unsigned char G[LEDs];  
+unsigned char R1[TAPE1_LEDs];
+unsigned char B1[TAPE1_LEDs];
+unsigned char G1[TAPE1_LEDs];
+unsigned char R2[TAPE2_LEDs];
+unsigned char B2[TAPE2_LEDs];
+unsigned char G2[TAPE2_LEDs];
+unsigned char R3[TAPE3_LEDs];
+unsigned char B3[TAPE3_LEDs];
+unsigned char G3[TAPE3_LEDs];
+unsigned char R4[TAPE4_LEDs];
+unsigned char B4[TAPE4_LEDs];
+unsigned char G4[TAPE4_LEDs];
+
+const int tape_leds_num[4] = {TAPE1_LEDs,TAPE2_LEDs,TAPE3_LEDs,TAPE4_LEDs};
+  
+typedef enum{
+  NONE = 0,
+  RAINBOW = 1,
+  RED = 2,
+  GREEN = 3,
+  BLUE = 4,
+  
+}BlinkMode_t;
+
+const char rainbow[20][3]={
+    {0,0,255},{0,51,204},{0,102,153},{0,153,102},{0,204,51},
+    {0,255,0},{31,207,0},{60,159,0},{110,111,0},{160,63,0},
+    {150,50,0},{180,40,10},{200,30,20},{220,20,30},{180,10,60},
+    {160,6,120},{140,5,130},{120,4,150},{80,3,180},{40,2,220},
+};
   
 #ifdef	__cplusplus
 }
