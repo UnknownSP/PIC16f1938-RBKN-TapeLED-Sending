@@ -43,30 +43,30 @@ extern "C" {
 #define TAPE7_LEDs 20
 #define TAPE8_LEDs 20
 
-unsigned char R1[TAPE1_LEDs];
-unsigned char B1[TAPE1_LEDs];
-unsigned char G1[TAPE1_LEDs];
-unsigned char R2[TAPE2_LEDs];
-unsigned char B2[TAPE2_LEDs];
-unsigned char G2[TAPE2_LEDs];
-unsigned char R3[TAPE3_LEDs];
-unsigned char B3[TAPE3_LEDs];
-unsigned char G3[TAPE3_LEDs];
-unsigned char R4[TAPE4_LEDs];
-unsigned char B4[TAPE4_LEDs];
-unsigned char G4[TAPE4_LEDs];
-unsigned char R5[TAPE5_LEDs];
-unsigned char B5[TAPE5_LEDs];
-unsigned char G5[TAPE5_LEDs];
-unsigned char R6[TAPE6_LEDs];
-unsigned char B6[TAPE6_LEDs];
-unsigned char G6[TAPE6_LEDs];
-unsigned char R7[TAPE7_LEDs];
-unsigned char B7[TAPE7_LEDs];
-unsigned char G7[TAPE7_LEDs];
-unsigned char R8[TAPE8_LEDs];
-unsigned char B8[TAPE8_LEDs];
-unsigned char G8[TAPE8_LEDs];
+unsigned char R1[TAPE1_LEDs]={};
+unsigned char B1[TAPE1_LEDs]={};
+unsigned char G1[TAPE1_LEDs]={};
+unsigned char R2[TAPE2_LEDs]={};
+unsigned char B2[TAPE2_LEDs]={};
+unsigned char G2[TAPE2_LEDs]={};
+unsigned char R3[TAPE3_LEDs]={};
+unsigned char B3[TAPE3_LEDs]={};
+unsigned char G3[TAPE3_LEDs]={};
+unsigned char R4[TAPE4_LEDs]={};
+unsigned char B4[TAPE4_LEDs]={};
+unsigned char G4[TAPE4_LEDs]={};
+unsigned char R5[TAPE5_LEDs]={};
+unsigned char B5[TAPE5_LEDs]={};
+unsigned char G5[TAPE5_LEDs]={};
+unsigned char R6[TAPE6_LEDs]={};
+unsigned char B6[TAPE6_LEDs]={};
+unsigned char G6[TAPE6_LEDs]={};
+unsigned char R7[TAPE7_LEDs]={};
+unsigned char B7[TAPE7_LEDs]={};
+unsigned char G7[TAPE7_LEDs]={};
+unsigned char R8[TAPE8_LEDs]={};
+unsigned char B8[TAPE8_LEDs]={};
+unsigned char G8[TAPE8_LEDs]={};
 
 const int tape_leds_num[8] = {TAPE1_LEDs,TAPE2_LEDs,TAPE3_LEDs,TAPE4_LEDs,TAPE5_LEDs,TAPE6_LEDs,TAPE7_LEDs,TAPE8_LEDs};
   
@@ -80,6 +80,10 @@ typedef enum{
   PURPLE = 6,
   BLINK_RED = 7,
   INCREMENT = 8,
+  BINARY_RED = 9,
+  BINARY_GREEN = 10,
+  BINARY_BLUE = 11,
+  DIMING = 12,
 }BlinkMode_t;
 
 const char rainbow[20][3]={
@@ -87,6 +91,9 @@ const char rainbow[20][3]={
     {0,255,0},{31,207,0},{60,159,0},{110,111,0},{160,63,0},
     {150,50,0},{180,40,10},{200,30,20},{220,20,30},{180,10,60},
     {160,6,120},{140,5,130},{120,4,150},{80,3,180},{40,2,220},
+};
+const char diming[20]={
+  19,4,13,5,12,1,15,6,11,7,17,16,3,2,10,9,14,8,18,1
 };
   
 #ifdef	__cplusplus

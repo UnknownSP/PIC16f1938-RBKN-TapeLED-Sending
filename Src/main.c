@@ -6,6 +6,7 @@
 void init(void);
 static void blink(BlinkMode_t mode, int tape_num);
 void set_rgb(int tape_num, int lednum, char color, int set_data);
+int get_rgb(int tape_num, int lednum, char color);
 
 void main(void) {
 
@@ -17,11 +18,11 @@ void main(void) {
       RB1 = !RB1;
       count = 0;
     }
-    blink(INCREMENT,1);
-    blink(RAINBOW,2);
-    blink(GREEN,3);
-    blink(RED,4);
-    blink(BLUE,5);
+    blink(DIMING,1);
+    blink(NONE,2);
+    blink(BINARY_RED,3);
+    blink(INCREMENT,4);
+    blink(RAINBOW,5);
     blink(YELLOW,6);
     blink(PURPLE,7);
     blink(BLINK_RED,8);
@@ -42,11 +43,24 @@ static void blink(BlinkMode_t mode, int tape_num){
     {0,0,0},
     {0,0,0},
     {0,0,0},
-  }; 
-  int i;
+  };
+  static int RGB[8][3]={
+    {0,0,0},
+    {0,0,0},
+    {0,0,0},
+    {0,0,0},
+    {0,0,0},
+    {0,0,0},
+    {0,0,0},
+    {0,0,0},
+  };
+  int i,j;
   static int red;
+  static char rgb;
+  static bool change_binary = true;
+  static bool setup[8] ={false,false,false,false,false,false,false,false};
   int set_count = 0;
-    
+  
   switch(mode){
   case NONE:
     for(i=0; i<tape_leds_num[tape_num-1]; i++){
@@ -57,7 +71,98 @@ static void blink(BlinkMode_t mode, int tape_num){
     SendData(tape_num);
     //__delay_ms(10);
     break;
-    
+  case DIMING:
+    RGB[tape_num-1][0] = 1;
+    RGB[tape_num-1][1] = 11;
+    RGB[tape_num-1][2] = 5;
+    if(count[tape_num-1]==0){
+      for(i=0;i<tape_leds_num[tape_num-1];i++){
+	set_rgb(tape_num, i, 'R', RGB[tape_num-1][0]*diming[i%20]);
+	set_rgb(tape_num, i, 'G', RGB[tape_num-1][1]*diming[i%20]);
+	set_rgb(tape_num, i, 'B', RGB[tape_num-1][2]*diming[i%20]);
+      }
+    }
+    count[tape_num-1]++;
+    for(i=0;i<tape_leds_num[tape_num-1];i++){
+      if(get_rgb(tape_num,i,'R')>0){
+	if(get_rgb(tape_num,i,'R')%2==0){
+	  set_rgb(tape_num, i, 'R', get_rgb(tape_num,i,'R')+4);
+	}else{
+	  set_rgb(tape_num, i, 'R', get_rgb(tape_num,i,'R')-4);
+	}
+      }
+      if(get_rgb(tape_num,i,'R')>247){
+	set_rgb(tape_num, i, 'R', 245);
+      }else if(get_rgb(tape_num,i,'R')<12 && get_rgb(tape_num,i,'R')>0){
+	set_rgb(tape_num, i, 'R', 12);
+      }
+
+      if(get_rgb(tape_num,i,'G')>0){
+	if(get_rgb(tape_num,i,'G')%2==0){
+	  set_rgb(tape_num, i, 'G', get_rgb(tape_num,i,'G')+4);
+	}else{
+	  set_rgb(tape_num, i, 'G', get_rgb(tape_num,i,'G')-4);
+	}
+      }
+      if(get_rgb(tape_num,i,'G')>247){
+	set_rgb(tape_num, i, 'G', 245);
+      }else if(get_rgb(tape_num,i,'G')<12 && get_rgb(tape_num,i,'G')>0){
+	set_rgb(tape_num, i, 'G', 12);
+      }
+
+      if(get_rgb(tape_num,i,'B')>0){
+	if(get_rgb(tape_num,i,'B')%2==0){
+	  set_rgb(tape_num, i, 'B', get_rgb(tape_num,i,'B')+4);
+	}else{
+	  set_rgb(tape_num, i, 'B', get_rgb(tape_num,i,'B')-4);
+	}
+      }
+      if(get_rgb(tape_num,i,'B')>247){
+	set_rgb(tape_num, i, 'B', 245);
+      }else if(get_rgb(tape_num,i,'B')<12 && get_rgb(tape_num,i,'B')>0){
+	set_rgb(tape_num, i, 'B', 12);
+      }
+    }
+    SendData(tape_num);
+    break;
+  case BINARY_RED:
+  case BINARY_GREEN:
+  case BINARY_BLUE:
+    switch(mode){
+    case BINARY_RED:
+      rgb = 'R';
+      break;
+    case BINARY_GREEN:
+      rgb = 'G';
+      break;
+    case BINARY_BLUE:
+      rgb = 'B';
+      break;
+    }
+    if(count2[tape_num-1]%1==0){
+      for(i=0;i<tape_leds_num[tape_num-1];i++){
+	for(j=0;j<i;j++){
+	  if(get_rgb(tape_num,j,rgb)!=0){
+	    change_binary = false;
+	  }
+	}
+	if(i==0){
+	  if(get_rgb(tape_num,0,rgb)==0){
+	    set_rgb(tape_num, 0, rgb, 255);
+	  }else{set_rgb(tape_num, 0, rgb, 0);}
+	  continue;
+	}
+	if(change_binary){
+	  if(get_rgb(tape_num,i,rgb)==0){
+	    set_rgb(tape_num, i, rgb, 255);
+	  }else{set_rgb(tape_num, i, rgb, 0);}
+	}
+	change_binary = true;
+      }
+    }
+    count2[tape_num-1]++;
+    SendData(tape_num);
+    break;
   case RAINBOW:
     if(count2[tape_num-1]%3==0){
       for(i=0; i<tape_leds_num[tape_num-1]; i++){
@@ -418,6 +523,117 @@ void set_rgb(int tape_num, int lednum, char color, int set_data){
     }
     break;
   }
+}
+
+int get_rgb(int tape_num, int lednum, char color){
+  int return_rgb = 0;
+  switch(tape_num){
+  case 1:
+    switch(color){
+    case 'R':
+      return_rgb = R1[lednum];
+      break;
+    case 'G':
+      return_rgb = G1[lednum];
+      break;
+    case 'B':
+      return_rgb = B1[lednum];
+      break;
+    }
+    break;
+  case 2:
+    switch(color){
+    case 'R':
+      return_rgb = R2[lednum];
+      break;
+    case 'G':
+      return_rgb = G2[lednum];
+      break;
+    case 'B':
+      return_rgb = B2[lednum];
+      break;
+    }
+    break;
+  case 3:
+    switch(color){
+    case 'R':
+      return_rgb = R3[lednum];
+      break;
+    case 'G':
+      return_rgb = G3[lednum];
+      break;
+    case 'B':
+      return_rgb = B3[lednum];
+      break;
+    }
+    break;
+  case 4:
+    switch(color){
+    case 'R':
+      return_rgb = R4[lednum];
+      break;
+    case 'G':
+      return_rgb = G4[lednum];
+      break;
+    case 'B':
+      return_rgb = B4[lednum];
+      break;
+    }
+    break;
+  case 5:
+    switch(color){
+    case 'R':
+      return_rgb = R5[lednum];
+      break;
+    case 'G':
+      return_rgb = G5[lednum];
+      break;
+    case 'B':
+      return_rgb = B5[lednum];
+      break;
+    }
+    break;
+  case 6:
+    switch(color){
+    case 'R':
+      return_rgb = R6[lednum];
+      break;
+    case 'G':
+      return_rgb = G6[lednum];
+      break;
+    case 'B':
+      return_rgb = B6[lednum];
+      break;
+    }
+    break;
+  case 7:
+    switch(color){
+    case 'R':
+      return_rgb = R7[lednum];
+      break;
+    case 'G':
+      return_rgb = G7[lednum];
+      break;
+    case 'B':
+      return_rgb = B7[lednum];
+      break;
+    }
+    break;
+  case 8:
+    switch(color){
+    case 'R':
+      return_rgb = R8[lednum];
+      break;
+    case 'G':
+      return_rgb = G8[lednum];
+      break;
+    case 'B':
+      return_rgb = B8[lednum];
+      break;
+    }
+    break;
+  }
+  return return_rgb;
 }
 
 void init(void){

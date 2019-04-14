@@ -1,8 +1,8 @@
 #include <pic16f1938.h>
 #include "LEDDrive.h"
 
-#define DATA_HI_1(){LATBbits.LATB0=1;}
-#define DATA_LOW_1(){LATBbits.LATB0=0;}
+#define DATA_HI_1(){LATBbits.LATB2=1;}
+#define DATA_LOW_1(){LATBbits.LATB2=0;}
 
 #define DATA_HI_2(){LATBbits.LATB3=1;}
 #define DATA_LOW_2(){LATBbits.LATB3=0;}
