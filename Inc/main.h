@@ -38,6 +38,10 @@ extern "C" {
 #define TAPE2_LEDs 20
 #define TAPE3_LEDs 20
 #define TAPE4_LEDs 20
+#define TAPE5_LEDs 20
+#define TAPE6_LEDs 20
+#define TAPE7_LEDs 20
+#define TAPE8_LEDs 20
 
 unsigned char R1[TAPE1_LEDs];
 unsigned char B1[TAPE1_LEDs];
@@ -51,8 +55,20 @@ unsigned char G3[TAPE3_LEDs];
 unsigned char R4[TAPE4_LEDs];
 unsigned char B4[TAPE4_LEDs];
 unsigned char G4[TAPE4_LEDs];
+unsigned char R5[TAPE5_LEDs];
+unsigned char B5[TAPE5_LEDs];
+unsigned char G5[TAPE5_LEDs];
+unsigned char R6[TAPE6_LEDs];
+unsigned char B6[TAPE6_LEDs];
+unsigned char G6[TAPE6_LEDs];
+unsigned char R7[TAPE7_LEDs];
+unsigned char B7[TAPE7_LEDs];
+unsigned char G7[TAPE7_LEDs];
+unsigned char R8[TAPE8_LEDs];
+unsigned char B8[TAPE8_LEDs];
+unsigned char G8[TAPE8_LEDs];
 
-const int tape_leds_num[4] = {TAPE1_LEDs,TAPE2_LEDs,TAPE3_LEDs,TAPE4_LEDs};
+const int tape_leds_num[8] = {TAPE1_LEDs,TAPE2_LEDs,TAPE3_LEDs,TAPE4_LEDs,TAPE5_LEDs,TAPE6_LEDs,TAPE7_LEDs,TAPE8_LEDs};
   
 typedef enum{
   NONE = 0,

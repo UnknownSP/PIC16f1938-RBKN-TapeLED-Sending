@@ -13,6 +13,18 @@
 #define DATA_HI_4(){LATBbits.LATB5=1;}
 #define DATA_LOW_4(){LATBbits.LATB5=0;}
 
+#define DATA_HI_5(){LATAbits.LATA3=1;}
+#define DATA_LOW_5(){LATAbits.LATA3=0;}
+
+#define DATA_HI_6(){LATAbits.LATA2=1;}
+#define DATA_LOW_6(){LATAbits.LATA2=0;}
+
+#define DATA_HI_7(){LATAbits.LATA1=1;}
+#define DATA_LOW_7(){LATAbits.LATA1=0;}
+
+#define DATA_HI_8(){LATAbits.LATA0=1;}
+#define DATA_LOW_8(){LATAbits.LATA0=0;}
+
 void SendData(int tape_num){
   int count = 0;
   switch(tape_num){
@@ -45,6 +57,38 @@ void SendData(int tape_num){
       SendDat4(G4[count]);//RedData
       SendDat4(R4[count]);//GreenData
       SendDat4(B4[count]);//Bluedata
+      count++;
+    }
+    break;
+  case 5:
+    while(count<TAPE5_LEDs){
+      SendDat5(G5[count]);//RedData
+      SendDat5(R5[count]);//GreenData
+      SendDat5(B5[count]);//Bluedata
+      count++;
+    }
+    break;
+  case 6:
+    while(count<TAPE6_LEDs){
+      SendDat6(G6[count]);//RedData
+      SendDat6(R6[count]);//GreenData
+      SendDat6(B6[count]);//Bluedata
+      count++;
+    }
+    break;
+  case 7:
+    while(count<TAPE7_LEDs){
+      SendDat7(G7[count]);//RedData
+      SendDat7(R7[count]);//GreenData
+      SendDat7(B7[count]);//Bluedata
+      count++;
+    }
+    break;
+  case 8:
+    while(count<TAPE8_LEDs){
+      SendDat8(G8[count]);//RedData
+      SendDat8(R8[count]);//GreenData
+      SendDat8(B8[count]);//Bluedata
       count++;
     }
     break;
@@ -348,5 +392,305 @@ void SendDat4(char dat){
       DATA_HI_4();
       asm("nop");
       DATA_LOW_4();
+    }
+}
+
+void SendDat5(char dat){
+    if(dat>>7&0x01){
+      DATA_HI_5();
+      asm("nop");asm("nop");asm("nop");
+      DATA_LOW_5();
+    }else{
+      DATA_HI_5();
+      asm("nop");
+      DATA_LOW_5();
+    }
+    if(dat>>6&0x01){
+      DATA_HI_5();
+      asm("nop");asm("nop");asm("nop");
+      DATA_LOW_5();
+    }else{
+      DATA_HI_5();
+      asm("nop");
+      DATA_LOW_5();
+    }
+    if(dat>>5&0x01){
+      DATA_HI_5();
+      asm("nop");asm("nop");asm("nop");
+      DATA_LOW_5();
+    }else{
+      DATA_HI_5();
+      asm("nop");
+      DATA_LOW_5();
+    }
+    if(dat>>4&0x01){
+      DATA_HI_5();
+      asm("nop");asm("nop");asm("nop");
+      DATA_LOW_5();
+    }else{
+      DATA_HI_5();
+      asm("nop");
+      DATA_LOW_5();
+    }
+    if(dat>>3&0x01){
+      DATA_HI_5();
+      asm("nop");asm("nop");asm("nop");
+      DATA_LOW_5();
+    }else{
+      DATA_HI_5();
+      asm("nop");
+      DATA_LOW_5();
+    }
+    if(dat>>2&0x01){
+      DATA_HI_5();
+      asm("nop");asm("nop");asm("nop");
+      DATA_LOW_5();
+    }else{
+      DATA_HI_5();
+      asm("nop");
+      DATA_LOW_5();
+    }
+    if(dat>>1&0x01){
+      DATA_HI_5();
+      asm("nop");asm("nop");asm("nop");
+      DATA_LOW_5();
+    }else{
+      DATA_HI_5();
+      asm("nop");
+      DATA_LOW_5();
+    }
+    if(dat>>0&0x01){
+      DATA_HI_5();
+      asm("nop");asm("nop");asm("nop");
+      DATA_LOW_5();
+    }else{
+      DATA_HI_5();
+      asm("nop");
+      DATA_LOW_5();
+    }
+}
+
+void SendDat6(char dat){
+    if(dat>>7&0x01){
+      DATA_HI_6();
+      asm("nop");asm("nop");asm("nop");
+      DATA_LOW_6();
+    }else{
+      DATA_HI_6();
+      asm("nop");
+      DATA_LOW_6();
+    }
+    if(dat>>6&0x01){
+      DATA_HI_6();
+      asm("nop");asm("nop");asm("nop");
+      DATA_LOW_6();
+    }else{
+      DATA_HI_6();
+      asm("nop");
+      DATA_LOW_6();
+    }
+    if(dat>>5&0x01){
+      DATA_HI_6();
+      asm("nop");asm("nop");asm("nop");
+      DATA_LOW_6();
+    }else{
+      DATA_HI_6();
+      asm("nop");
+      DATA_LOW_6();
+    }
+    if(dat>>4&0x01){
+      DATA_HI_6();
+      asm("nop");asm("nop");asm("nop");
+      DATA_LOW_6();
+    }else{
+      DATA_HI_6();
+      asm("nop");
+      DATA_LOW_6();
+    }
+    if(dat>>3&0x01){
+      DATA_HI_6();
+      asm("nop");asm("nop");asm("nop");
+      DATA_LOW_6();
+    }else{
+      DATA_HI_6();
+      asm("nop");
+      DATA_LOW_6();
+    }
+    if(dat>>2&0x01){
+      DATA_HI_6();
+      asm("nop");asm("nop");asm("nop");
+      DATA_LOW_6();
+    }else{
+      DATA_HI_6();
+      asm("nop");
+      DATA_LOW_6();
+    }
+    if(dat>>1&0x01){
+      DATA_HI_6();
+      asm("nop");asm("nop");asm("nop");
+      DATA_LOW_6();
+    }else{
+      DATA_HI_6();
+      asm("nop");
+      DATA_LOW_6();
+    }
+    if(dat>>0&0x01){
+      DATA_HI_6();
+      asm("nop");asm("nop");asm("nop");
+      DATA_LOW_6();
+    }else{
+      DATA_HI_6();
+      asm("nop");
+      DATA_LOW_6();
+    }
+}
+
+void SendDat7(char dat){
+    if(dat>>7&0x01){
+      DATA_HI_7();
+      asm("nop");asm("nop");asm("nop");
+      DATA_LOW_7();
+    }else{
+      DATA_HI_7();
+      asm("nop");
+      DATA_LOW_7();
+    }
+    if(dat>>6&0x01){
+      DATA_HI_7();
+      asm("nop");asm("nop");asm("nop");
+      DATA_LOW_7();
+    }else{
+      DATA_HI_7();
+      asm("nop");
+      DATA_LOW_7();
+    }
+    if(dat>>5&0x01){
+      DATA_HI_7();
+      asm("nop");asm("nop");asm("nop");
+      DATA_LOW_7();
+    }else{
+      DATA_HI_7();
+      asm("nop");
+      DATA_LOW_7();
+    }
+    if(dat>>4&0x01){
+      DATA_HI_7();
+      asm("nop");asm("nop");asm("nop");
+      DATA_LOW_7();
+    }else{
+      DATA_HI_7();
+      asm("nop");
+      DATA_LOW_7();
+    }
+    if(dat>>3&0x01){
+      DATA_HI_7();
+      asm("nop");asm("nop");asm("nop");
+      DATA_LOW_7();
+    }else{
+      DATA_HI_7();
+      asm("nop");
+      DATA_LOW_7();
+    }
+    if(dat>>2&0x01){
+      DATA_HI_7();
+      asm("nop");asm("nop");asm("nop");
+      DATA_LOW_7();
+    }else{
+      DATA_HI_7();
+      asm("nop");
+      DATA_LOW_7();
+    }
+    if(dat>>1&0x01){
+      DATA_HI_7();
+      asm("nop");asm("nop");asm("nop");
+      DATA_LOW_7();
+    }else{
+      DATA_HI_7();
+      asm("nop");
+      DATA_LOW_7();
+    }
+    if(dat>>0&0x01){
+      DATA_HI_7();
+      asm("nop");asm("nop");asm("nop");
+      DATA_LOW_7();
+    }else{
+      DATA_HI_7();
+      asm("nop");
+      DATA_LOW_7();
+    }
+}
+
+void SendDat8(char dat){
+    if(dat>>7&0x01){
+      DATA_HI_8();
+      asm("nop");asm("nop");asm("nop");
+      DATA_LOW_8();
+    }else{
+      DATA_HI_8();
+      asm("nop");
+      DATA_LOW_8();
+    }
+    if(dat>>6&0x01){
+      DATA_HI_8();
+      asm("nop");asm("nop");asm("nop");
+      DATA_LOW_8();
+    }else{
+      DATA_HI_8();
+      asm("nop");
+      DATA_LOW_8();
+    }
+    if(dat>>5&0x01){
+      DATA_HI_8();
+      asm("nop");asm("nop");asm("nop");
+      DATA_LOW_8();
+    }else{
+      DATA_HI_8();
+      asm("nop");
+      DATA_LOW_8();
+    }
+    if(dat>>4&0x01){
+      DATA_HI_8();
+      asm("nop");asm("nop");asm("nop");
+      DATA_LOW_8();
+    }else{
+      DATA_HI_8();
+      asm("nop");
+      DATA_LOW_8();
+    }
+    if(dat>>3&0x01){
+      DATA_HI_8();
+      asm("nop");asm("nop");asm("nop");
+      DATA_LOW_8();
+    }else{
+      DATA_HI_8();
+      asm("nop");
+      DATA_LOW_8();
+    }
+    if(dat>>2&0x01){
+      DATA_HI_8();
+      asm("nop");asm("nop");asm("nop");
+      DATA_LOW_8();
+    }else{
+      DATA_HI_8();
+      asm("nop");
+      DATA_LOW_8();
+    }
+    if(dat>>1&0x01){
+      DATA_HI_8();
+      asm("nop");asm("nop");asm("nop");
+      DATA_LOW_8();
+    }else{
+      DATA_HI_8();
+      asm("nop");
+      DATA_LOW_8();
+    }
+    if(dat>>0&0x01){
+      DATA_HI_8();
+      asm("nop");asm("nop");asm("nop");
+      DATA_LOW_8();
+    }else{
+      DATA_HI_8();
+      asm("nop");
+      DATA_LOW_8();
     }
 }
