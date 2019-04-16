@@ -18,9 +18,9 @@ void main(void) {
       RB1 = !RB1;
       count = 0;
     }
-    blink(DIMING,1);
-    blink(NONE,2);
-    blink(BINARY_RED,3);
+    blink(INCREMENT,1);
+    blink(INCREMENT,2);
+    blink(INCREMENT,3);
     blink(INCREMENT,4);
     blink(RAINBOW,5);
     blink(YELLOW,6);
@@ -54,8 +54,18 @@ static void blink(BlinkMode_t mode, int tape_num){
     {0,0,0},
     {0,0,0},
   };
+  static int RGB_BLINK[8][3]={
+    {0,0,0},
+    {0,0,0},
+    {0,0,0},
+    {0,0,0},
+    {0,0,0},
+    {0,0,0},
+    {0,0,0},
+    {0,0,0},
+  };
   int i,j;
-  static int red;
+  static int red[8],green[8],blue[8];
   static char rgb;
   static bool change_binary = true;
   static bool setup[8] ={false,false,false,false,false,false,false,false};
@@ -71,10 +81,44 @@ static void blink(BlinkMode_t mode, int tape_num){
     SendData(tape_num);
     //__delay_ms(10);
     break;
-  case DIMING:
-    RGB[tape_num-1][0] = 1;
-    RGB[tape_num-1][1] = 11;
-    RGB[tape_num-1][2] = 5;
+  case DIMING_RAINBOW:
+  case DIMING_RED:
+  case DIMING_GREEN:
+  case DIMING_BLUE:
+  case DIMING_YELLOW:
+  case DIMING_PURPLE:
+    switch(mode){
+    case DIMING_RAINBOW:
+      RGB[tape_num-1][0] = 1;
+      RGB[tape_num-1][1] = 11;
+      RGB[tape_num-1][2] = 5;
+      break;
+    case DIMING_RED:
+      RGB[tape_num-1][0] = 13;
+      RGB[tape_num-1][1] = 0;
+      RGB[tape_num-1][2] = 0;
+      break;
+    case DIMING_GREEN:
+      RGB[tape_num-1][0] = 0;
+      RGB[tape_num-1][1] = 13;
+      RGB[tape_num-1][2] = 0;
+      break;
+    case DIMING_BLUE:
+      RGB[tape_num-1][0] = 0;
+      RGB[tape_num-1][1] = 0;
+      RGB[tape_num-1][2] = 13;
+      break;
+    case DIMING_YELLOW:
+      RGB[tape_num-1][0] = 13;
+      RGB[tape_num-1][1] = 13;
+      RGB[tape_num-1][2] = 0;
+      break;
+    case DIMING_PURPLE:
+      RGB[tape_num-1][0] = 13;
+      RGB[tape_num-1][1] = 0;
+      RGB[tape_num-1][2] = 13;
+      break;
+    }
     if(count[tape_num-1]==0){
       for(i=0;i<tape_leds_num[tape_num-1];i++){
 	set_rgb(tape_num, i, 'R', RGB[tape_num-1][0]*diming[i%20]);
@@ -233,27 +277,66 @@ static void blink(BlinkMode_t mode, int tape_num){
     break;
 
   case BLINK_RED:
+  case BLINK_GREEN:
+  case BLINK_BLUE:
+  case BLINK_YELLOW:
+  case BLINK_PURPLE:
+    switch(mode){
+    case BLINK_RED:
+      RGB_BLINK[tape_num-1][0] = 1;
+      RGB_BLINK[tape_num-1][1] = 0;
+      RGB_BLINK[tape_num-1][2] = 0;
+      break;
+    case BLINK_GREEN:
+      RGB_BLINK[tape_num-1][0] = 0;
+      RGB_BLINK[tape_num-1][1] = 1;
+      RGB_BLINK[tape_num-1][2] = 0;
+      break;
+    case BLINK_BLUE:
+      RGB_BLINK[tape_num-1][0] = 0;
+      RGB_BLINK[tape_num-1][1] = 0;
+      RGB_BLINK[tape_num-1][2] = 1;
+      break;
+    case BLINK_YELLOW:
+      RGB_BLINK[tape_num-1][0] = 1;
+      RGB_BLINK[tape_num-1][1] = 1;
+      RGB_BLINK[tape_num-1][2] = 0;
+      break;
+    case BLINK_PURPLE:
+      RGB_BLINK[tape_num-1][0] = 1;
+      RGB_BLINK[tape_num-1][1] = 0;
+      RGB_BLINK[tape_num-1][2] = 1;
+      break;
+    }
     switch(count[tape_num-1]){
     case 1:
-      red = 255;
+      red[tape_num-1] = RGB_BLINK[tape_num-1][0]   * 255;
+      green[tape_num-1] = RGB_BLINK[tape_num-1][1] * 255;
+      blue[tape_num-1] = RGB_BLINK[tape_num-1][2]  * 255;
       break;
     case 8:
-      red = 0;
+      red[tape_num-1] = RGB_BLINK[tape_num-1][0]   * 0;
+      green[tape_num-1] = RGB_BLINK[tape_num-1][1] * 0;
+      blue[tape_num-1] = RGB_BLINK[tape_num-1][2]  * 0;
       break;
     case 15:
-      red = 255;
+      red[tape_num-1] = RGB_BLINK[tape_num-1][0]   * 255;
+      green[tape_num-1] = RGB_BLINK[tape_num-1][1] * 255;
+      blue[tape_num-1] = RGB_BLINK[tape_num-1][2]  * 255;
       break;
     case 22:
-      red = 0;
+      red[tape_num-1] = RGB_BLINK[tape_num-1][0]   * 0;
+      green[tape_num-1] = RGB_BLINK[tape_num-1][1] * 0;
+      blue[tape_num-1] = RGB_BLINK[tape_num-1][2]  * 0;
       break;
     case 49:
       count[tape_num-1] = 0;
       break;
     }
     for(i=0; i<tape_leds_num[tape_num-1]; i++){
-      set_rgb(tape_num, i, 'R', red);
-      set_rgb(tape_num, i, 'G', 0);
-      set_rgb(tape_num, i, 'B', 0);
+      set_rgb(tape_num, i, 'R', red[tape_num-1]);
+      set_rgb(tape_num, i, 'G', green[tape_num-1]);
+      set_rgb(tape_num, i, 'B', blue[tape_num-1]);
     }
     count[tape_num-1]++;
     SendData(tape_num);
