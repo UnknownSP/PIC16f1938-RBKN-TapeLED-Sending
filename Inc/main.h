@@ -43,6 +43,19 @@ extern "C" {
 #define TAPE7_LEDs 20
 #define TAPE8_LEDs 20
 
+#define DATA_IN_0     RA0
+#define DATA_IN_1     RA1
+#define DATA_IN_2     RA2
+#define DATA_IN_3     RA3
+#define DATA_IN_4     RA4
+#define DATA_IN_5     RA5
+#define DATA_IN_6     RA6
+#define DATA_IN_7     RC0
+#define DATA_SELECT_0 RB0
+#define DATA_SELECT_1 RC7
+#define DATA_SELECT_2 RC2
+#define DATA_CLOCK    RC1
+  
 unsigned char R1[TAPE1_LEDs]={};
 unsigned char B1[TAPE1_LEDs]={};
 unsigned char G1[TAPE1_LEDs]={};

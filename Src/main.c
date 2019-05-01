@@ -4,6 +4,7 @@
 #include <stdlib.h>
 
 void init(void);
+static int get_data(char *data, bool clock_enable);
 static void blink(BlinkMode_t mode, int tape_num);
 void set_rgb(int tape_num, int lednum, char color, int set_data);
 int get_rgb(int tape_num, int lednum, char color);
@@ -11,23 +12,33 @@ int get_rgb(int tape_num, int lednum, char color);
 void main(void) {
 
   int count=0;
+  static char send_data[8] = {};
   
   init();
   while(true){
-    if(count==8){
-      RB1 = !RB1;
-      count = 0;
-    }
-    blink(INCREMENT,1);
-    blink(INCREMENT,2);
-    blink(INCREMENT,3);
-    blink(INCREMENT,4);
-    blink(RAINBOW,5);
-    blink(YELLOW,6);
-    blink(PURPLE,7);
-    blink(BLINK_RED,8);
-    count++;
+    blink(send_data[0],1);
+    blink(send_data[1],2);
+    blink(send_data[2],3);
+    blink(send_data[3],4);
+    get_data(send_data,true);
+    blink(send_data[4],5);
+    blink(send_data[5],6);
+    blink(send_data[6],7);
+    blink(send_data[7],8);
+    get_data(send_data,false);
   }
+}
+
+static int get_data(char *data, bool clock_enable){
+  static int get_data_num = 0;
+  if(clock_enable){
+    DATA_CLOCK = 1;
+    return 0;
+  }
+  get_data_num = DATA_SELECT_0 + DATA_SELECT_1<<1 + DATA_SELECT_2<<2;
+  data[get_data_num] = DATA_IN_0 + DATA_IN_1<<1 + DATA_IN_2<<2 + DATA_IN_3<<3 + DATA_IN_4<<4 + DATA_IN_5<<5 + DATA_IN_6<<6 + DATA_IN_7<<7;
+  DATA_CLOCK = 0;
+  return 0;
 }
 
 static void blink(BlinkMode_t mode, int tape_num){
@@ -727,9 +738,9 @@ void init(void){
   // Set pin mode
   ANSELA = 0b00000000;
   ANSELB = 0b00000000;
-  TRISA  = 0b00000000;
-  TRISB  = 0b00000000;
-  TRISC  = 0b00000000;
+  TRISA  = 0b01111111;
+  TRISB  = 0b00000001;
+  TRISC  = 0b10000101;
   
 }
 
