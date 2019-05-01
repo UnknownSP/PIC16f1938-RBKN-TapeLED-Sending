@@ -30,6 +30,7 @@ extern "C" {
 #pragma config LVP = OFF        // Low-Voltage Programming Enable (High-voltage on MCLR/VPP must be used for programming)
 
 #include <pic16f1938.h>
+#include <stdint.h>
 #include "LEDDrive.h"
 
 #define MAX_LEDs 200

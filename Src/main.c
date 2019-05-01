@@ -4,18 +4,22 @@
 #include <stdlib.h>
 
 void init(void);
-static int get_data(char *data, bool clock_enable);
+static int get_data(uint8_t *data, bool clock_enable);
 static void blink(BlinkMode_t mode, int tape_num);
 void set_rgb(int tape_num, int lednum, char color, int set_data);
 int get_rgb(int tape_num, int lednum, char color);
 
 void main(void) {
 
-  int count=0;
+  int count = 0;
   static char send_data[8] = {};
   
   init();
   while(true){
+    /* count++; */
+    /* if(count%4 == 0){ */
+    /*   get_data(send_data,true); */
+    /* } */
     blink(send_data[0],1);
     blink(send_data[1],2);
     blink(send_data[2],3);
@@ -26,17 +30,21 @@ void main(void) {
     blink(send_data[6],7);
     blink(send_data[7],8);
     get_data(send_data,false);
+    /* if(count%7 == 0){ */
+    /*   get_data(send_data,false); */
+    /*   count = 0; */
+    /* } */
   }
 }
 
-static int get_data(char *data, bool clock_enable){
-  static int get_data_num = 0;
+static int get_data(uint8_t *data, bool clock_enable){
+  static uint8_t get_data_num = 0;
   if(clock_enable){
     DATA_CLOCK = 1;
     return 0;
   }
-  get_data_num = DATA_SELECT_0 + DATA_SELECT_1<<1 + DATA_SELECT_2<<2;
-  data[get_data_num] = DATA_IN_0 + DATA_IN_1<<1 + DATA_IN_2<<2 + DATA_IN_3<<3 + DATA_IN_4<<4 + DATA_IN_5<<5 + DATA_IN_6<<6 + DATA_IN_7<<7;
+  get_data_num = DATA_SELECT_0 + DATA_SELECT_1*2 + DATA_SELECT_2*4;
+  data[get_data_num] = DATA_IN_0 + DATA_IN_1*2 + DATA_IN_2*4 + DATA_IN_3*8 + DATA_IN_4*16 + DATA_IN_5*32 + DATA_IN_6*64 + DATA_IN_7*128;
   DATA_CLOCK = 0;
   return 0;
 }
