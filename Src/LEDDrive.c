@@ -1,29 +1,29 @@
 #include <pic16f1938.h>
 #include "LEDDrive.h"
 
-#define DATA_HI_1(){LATBbits.LATB2=1;}
-#define DATA_LOW_1(){LATBbits.LATB2=0;}
+#define DATA_HI_1(){LATCbits.LATC3=1;}
+#define DATA_LOW_1(){LATCbits.LATC3=0;}
 
-#define DATA_HI_2(){LATBbits.LATB3=1;}
-#define DATA_LOW_2(){LATBbits.LATB3=0;}
+#define DATA_HI_2(){LATCbits.LATC6=1;}
+#define DATA_LOW_2(){LATCbits.LATC6=0;}
 
-#define DATA_HI_3(){LATBbits.LATB4=1;}
-#define DATA_LOW_3(){LATBbits.LATB4=0;}
+#define DATA_HI_3(){LATCbits.LATC5=1;}
+#define DATA_LOW_3(){LATCbits.LATC5=0;}
 
-#define DATA_HI_4(){LATBbits.LATB5=1;}
-#define DATA_LOW_4(){LATBbits.LATB5=0;}
+#define DATA_HI_4(){LATCbits.LATC4=1;}
+#define DATA_LOW_4(){LATCbits.LATC4=0;}
 
-#define DATA_HI_5(){LATAbits.LATA3=1;}
-#define DATA_LOW_5(){LATAbits.LATA3=0;}
+#define DATA_HI_5(){LATBbits.LATB5=1;}
+#define DATA_LOW_5(){LATBbits.LATB5=0;}
 
-#define DATA_HI_6(){LATAbits.LATA2=1;}
-#define DATA_LOW_6(){LATAbits.LATA2=0;}
+#define DATA_HI_6(){LATBbits.LATB4=1;}
+#define DATA_LOW_6(){LATBbits.LATB4=0;}
 
-#define DATA_HI_7(){LATAbits.LATA1=1;}
-#define DATA_LOW_7(){LATAbits.LATA1=0;}
+#define DATA_HI_7(){LATBbits.LATB3=1;}
+#define DATA_LOW_7(){LATBbits.LATB3=0;}
 
-#define DATA_HI_8(){LATAbits.LATA0=1;}
-#define DATA_LOW_8(){LATAbits.LATA0=0;}
+#define DATA_HI_8(){LATBbits.LATB2=1;}
+#define DATA_LOW_8(){LATBbits.LATB2=0;}
 
 void SendData(int tape_num){
   int count = 0;
