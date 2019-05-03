@@ -1,0 +1,26 @@
+[1mdiff --git a/Src/main.c b/Src/main.c[m
+[1mindex 0cda0df..2acdc5d 100644[m
+[1m--- a/Src/main.c[m
+[1m+++ b/Src/main.c[m
+[36m@@ -16,10 +16,6 @@[m [mvoid main(void) {[m
+   [m
+   init();[m
+   while(true){[m
+[31m-    /* count++; */[m
+[31m-    /* if(count%4 == 0){ */[m
+[31m-    /*   get_data(send_data,true); */[m
+[31m-    /* } */[m
+     blink(send_data[0],1);[m
+     blink(send_data[1],2);[m
+     blink(send_data[2],3);[m
+[36m@@ -30,10 +26,6 @@[m [mvoid main(void) {[m
+     blink(send_data[6],7);[m
+     blink(send_data[7],8);[m
+     get_data(send_data,false);[m
+[31m-    /* if(count%7 == 0){ */[m
+[31m-    /*   get_data(send_data,false); */[m
+[31m-    /*   count = 0; */[m
+[31m-    /* } */[m
+   }[m
+ }[m
+ [m

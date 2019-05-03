@@ -16,10 +16,6 @@ void main(void) {
   
   init();
   while(true){
-    /* count++; */
-    /* if(count%4 == 0){ */
-    /*   get_data(send_data,true); */
-    /* } */
     blink(send_data[0],1);
     blink(send_data[1],2);
     blink(send_data[2],3);
@@ -30,10 +26,6 @@ void main(void) {
     blink(send_data[6],7);
     blink(send_data[7],8);
     get_data(send_data,false);
-    /* if(count%7 == 0){ */
-    /*   get_data(send_data,false); */
-    /*   count = 0; */
-    /* } */
   }
 }
 
