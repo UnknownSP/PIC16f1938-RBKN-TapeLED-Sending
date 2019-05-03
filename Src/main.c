@@ -42,7 +42,8 @@ static int get_data(uint8_t *data, bool clock_enable){
 }
 
 static void blink(BlinkMode_t mode, int tape_num){
-  
+
+  static BlinkMode_t recent_mode[8] = {};
   static int count[8]={0,0,0,0,0,0,0,0};
   static int count2[8]={0,0,0,0,0,0,0,0};
   static int increment[8][3]={
@@ -81,6 +82,20 @@ static void blink(BlinkMode_t mode, int tape_num){
   static bool change_binary = true;
   static bool setup[8] ={false,false,false,false,false,false,false,false};
   int set_count = 0;
+
+  if(mode != recent_mode[tape_num-1]){
+    count[tape_num-1] = 0;
+    count2[tape_num-1] = 0;
+    increment[tape_num-1][0] = 0;
+    increment[tape_num-1][1] = 0;
+    increment[tape_num-1][2] = 0;
+    RGB[tape_num-1][0] = 0;
+    RGB[tape_num-1][1] = 0;
+    RGB[tape_num-1][2] = 0;
+    RGB_BLINK[tape_num-1][0] = 0;
+    RGB_BLINK[tape_num-1][1] = 0;
+    RGB_BLINK[tape_num-1][2] = 0;
+  }
   
   switch(mode){
   case NONE:
@@ -506,6 +521,7 @@ static void blink(BlinkMode_t mode, int tape_num){
     //__delay_ms(10);
     break;
   }
+  recent_mode[tape_num-1] = mode;
 }
 
 void set_rgb(int tape_num, int lednum, char color, int set_data){
