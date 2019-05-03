@@ -4,7 +4,7 @@
 #include <stdlib.h>
 
 void init(void);
-static int get_data(uint8_t *data, bool clock_enable);
+static int data_get(uint8_t *data, bool clock_enable);
 static void blink(BlinkMode_t mode, int tape_num);
 void set_rgb(int tape_num, int lednum, char color, int set_data);
 int get_rgb(int tape_num, int lednum, char color);
@@ -20,17 +20,18 @@ void main(void) {
     blink(send_data[1],2);
     blink(send_data[2],3);
     blink(send_data[3],4);
-    get_data(send_data,true);
+    data_get(send_data,true);
     blink(send_data[4],5);
     blink(send_data[5],6);
     blink(send_data[6],7);
     blink(send_data[7],8);
-    get_data(send_data,false);
+    data_get(send_data,false);
   }
 }
 
-static int get_data(uint8_t *data, bool clock_enable){
+static int data_get(uint8_t *data, bool clock_enable){
   static uint8_t get_data_num = 0;
+
   if(clock_enable){
     DATA_CLOCK = 1;
     return 0;
