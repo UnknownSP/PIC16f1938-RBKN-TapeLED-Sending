@@ -2,6 +2,8 @@
 pic16f1938を用いてI2C通信でテープLED(ws2812b)を最大8本制御する為のソフトウェアです。
 PIC16f1938-RBKN-TapeLED-Com を別picで同時に使用します。
 
+## 実際の動作
+stm32f_systemから制御することで以下のような動作が可能となります。
 https://github.com/UnknownSP/PIC16f1938-RBKN-TapeLED-Sending/assets/39638661/325ef8eb-ca5a-4cdb-b3d8-aeb81f05cd2a
 
 ## 制御方式
