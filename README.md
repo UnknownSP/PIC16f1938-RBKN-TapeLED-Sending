@@ -7,6 +7,10 @@ stm32f_systemから制御することで以下のような動作が可能とな�
 
 https://github.com/UnknownSP/PIC16f1938-RBKN-TapeLED-Sending/assets/39638661/325ef8eb-ca5a-4cdb-b3d8-aeb81f05cd2a
 
+発色の例です。
+
+https://github.com/UnknownSP/PIC16f1938-RBKN-TapeLED-Sending/assets/39638661/c0b80055-5a63-479d-b368-413351664c9f
+
 ## 制御方式
 8本LEDを制御するので、3本のデータセレクト信号線、8本のデータ送信線、クロック線を用いてPIC間での通信をおこなっています。
 
